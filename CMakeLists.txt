@@ -41,7 +41,7 @@ function(set_custom_stdlib_and_sanitizers target add_apple_asan)
         if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
             if("${CMAKE_CXX_COMPILER_VERSION}" MATCHES "12.")
                 # check leaks on Linux since macOS does not support the leaks sanitizer yet
-                # leaks sanitizer is enabled by default on Linux, so we do not need to enable it explicitly
+                # leaks sanitizer is active by default on Linux, so we do not need to enable it explicitly
                 target_compile_options(${target} PRIVATE "$<${debug_mode}:-fsanitize=address,undefined>")
                 target_link_options(${target} PRIVATE "$<${debug_mode}:-fsanitize=address,undefined>")
             elseif("${CMAKE_CXX_COMPILER_VERSION}" MATCHES "13.")
@@ -93,7 +93,7 @@ endif()
 ###############################################################################
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp include/Vector.cpp include/Vector.h include/Transform.cpp include/Transform.h include/mymath.h include/mymath.cpp include/Rigidbody.cpp include/Rigidbody.h)
 
 ###############################################################################
 
