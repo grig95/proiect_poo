@@ -66,7 +66,7 @@ void Rigidbody::step(double const& deltaTime) {
 
     ///position side
     velocity+=resultantForce*deltaTime/mass;
-    velocity-=velocity.normalized()*pow(velocity.magnitude(), 2)*airDragCoefficient*deltaTime;
+    velocity-=velocity.normalized()*pow(velocity.magnitude(), 2)*airDragCoefficient*deltaTime/mass;
     if(velocity.getX()<0)
         velocity-=Vector::right()*velocity.getX();
     if(velocity.getY()<0)
