@@ -26,6 +26,9 @@ Rigidbody::Rigidbody(Vector const& position, double const& mass, double const& b
 }
 
 Rigidbody& Rigidbody::operator=(Rigidbody const& rb) {
+    if(this==&rb)
+        return *this;
+
     mass=rb.mass;
     transform=new Transform(*rb.transform);
     velocity=rb.velocity;
