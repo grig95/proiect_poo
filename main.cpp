@@ -1,6 +1,13 @@
-/// ----- PROBLEMS -----
-/// 1. Rigidbody/Collider destructor deleting referenced Transform and causing errors when attempting to delete said Transform object again
-/// 2. Nicer way to set ForceMode::Force as the default argument in Rigidbody.addForce()?
+/// !!!! IDEA !!!!
+/// Goal: Implement general Handler template class
+/// PhysicsHandler will inherit from Handler<Rigidbody>, CollisionHandler from Handler<Collider> and so on
+/// Problem: Once an object is constructed or destroyed, the handler needs to somehow be notified.
+/// Solution 1: Modify constructors and destructors for all handle-able classes. (not nice, but would work)
+/// Solution 2: weak_ptr and periodic existence check. (still have to deal with construction though)
+/// Solution 3: Have only the Object class handle-able, and use getters to access their Rigidbodies, Colliders and Monobehaviours. (favourite)
+
+/// ---- REMEMBER ----
+/// 1. Make Rigidbody.step(double) private after implementing PhysicsHandler class (or something to do its job)
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -34,7 +41,8 @@ int main() {
     std::cout<<t2<<" "<<t2.up()<<" "<<t2.right()<<'\n';
 
     std::cout<<'\n';
-    Rigidbody rb1(t1, 1), rb2=rb1, rb3(t1, 1, 1, 0.2, 0.05);
+    Transform t3(t1);
+    Rigidbody rb1(&t1, 1), rb2(&t2), rb3(&t3, 1, 1, 0.2, 0.05);
     std::cout<<t1<<'\n';
     rb1.addForce(5*Vector::right());
     rb2.addForce((Vector::zero()));

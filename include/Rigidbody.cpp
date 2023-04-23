@@ -1,36 +1,17 @@
 #include "Rigidbody.h"
 
 ///constructors, destructor, operators
-Rigidbody::Rigidbody() : mass(1), velocity(), angularVelocity(0), constraints((Constraints)0), bounciness(1), frictionCoefficient(0), airDragCoefficient(0), active(true), resultantForce(), resultantAngularAcceleration(0) {
-    transform=new Transform();
-}
+Rigidbody::Rigidbody(Transform* t) : transform(t), mass(1), velocity(), angularVelocity(0), constraints((Constraints)0), bounciness(1), frictionCoefficient(0), airDragCoefficient(0), active(true), resultantForce(), resultantAngularAcceleration(0) {}
 
-Rigidbody::Rigidbody(Rigidbody const& rb) : mass(rb.mass), velocity(rb.velocity), angularVelocity(rb.angularVelocity), constraints(rb.constraints), bounciness(rb.bounciness), frictionCoefficient(rb.frictionCoefficient), airDragCoefficient(rb.airDragCoefficient), active(true), resultantForce(), resultantAngularAcceleration(0) {
-    transform=new Transform(*rb.transform);
-}
+Rigidbody::Rigidbody(Transform* t, double const& mass, Constraints const& c) : transform(t), mass(mass), velocity(), angularVelocity(0), constraints(c), bounciness(1), frictionCoefficient(0), airDragCoefficient(0), active(true), resultantForce(), resultantAngularAcceleration(0) {}
 
-Rigidbody::Rigidbody(Transform const& t, double const& mass, Constraints const& c) : mass(mass), velocity(), angularVelocity(0), constraints(c), bounciness(1), frictionCoefficient(0), airDragCoefficient(0), active(true), resultantForce(), resultantAngularAcceleration(0) {
-    transform=new Transform(t);
-}
-
-Rigidbody::Rigidbody(Vector const& position, double const& mass, Constraints const& c) : mass(mass), velocity(), angularVelocity(0), constraints(c), bounciness(1), frictionCoefficient(0), airDragCoefficient(0), active(true), resultantForce(), resultantAngularAcceleration(0) {
-    transform=new Transform(position, 0);
-}
-
-Rigidbody::Rigidbody(Transform const& t, double const& mass, double const& bounciness, double const& frictionCoefficient, double const& airDragCoefficient) : mass(mass), velocity(), angularVelocity(0), constraints((Constraints)0), bounciness(bounciness), frictionCoefficient(frictionCoefficient), airDragCoefficient(airDragCoefficient), active(true), resultantForce(), resultantAngularAcceleration(0) {
-    transform=new Transform(t);
-}
-
-Rigidbody::Rigidbody(Vector const& position, double const& mass, double const& bounciness, double const& frictionCoefficient, double const& airDragCoefficient) : mass(mass), velocity(), angularVelocity(0), constraints((Constraints)0), bounciness(bounciness), frictionCoefficient(frictionCoefficient), airDragCoefficient(airDragCoefficient), active(true), resultantForce(), resultantAngularAcceleration(0) {
-    transform=new Transform(position, 0);
-}
+Rigidbody::Rigidbody(Transform* t, double const& mass, double const& bounciness, double const& frictionCoefficient, double const& airDragCoefficient) : transform(t), mass(mass), velocity(), angularVelocity(0), constraints((Constraints)0), bounciness(bounciness), frictionCoefficient(frictionCoefficient), airDragCoefficient(airDragCoefficient), active(true), resultantForce(), resultantAngularAcceleration(0) {}
 
 Rigidbody& Rigidbody::operator=(Rigidbody const& rb) {
     if(this==&rb)
         return *this;
 
     mass=rb.mass;
-    transform=new Transform(*rb.transform);
     velocity=rb.velocity;
     angularVelocity=rb.angularVelocity;
     constraints=rb.constraints;
@@ -39,23 +20,19 @@ Rigidbody& Rigidbody::operator=(Rigidbody const& rb) {
     airDragCoefficient=rb.airDragCoefficient;
     active=rb.active;
 
-    ///?
-    resultantForce=rb.resultantForce;
-    resultantAngularAcceleration=rb.resultantAngularAcceleration;
-
     return *this;
 }
 
 Rigidbody::~Rigidbody() = default;
 
 ///functionality
-enum Rigidbody::Constraints : char {
+enum Rigidbody::Constraints : uint8_t {
     FreezeX=1,
     FreezeY=2,
     FreezeRotation=4
 };
 
-enum Rigidbody::ForceMode : char {
+enum Rigidbody::ForceMode : uint8_t {
     Force=1,
     Acceleration=2
 };

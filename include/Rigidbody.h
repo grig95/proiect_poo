@@ -5,11 +5,11 @@
 
 class Rigidbody {
 public:
-    enum Constraints : char;
-    enum ForceMode : char;
+    enum Constraints : uint8_t;
+    enum ForceMode : uint8_t;
 private:
-    double mass;
     Transform *transform;
+    double mass;
     Vector velocity;
     double angularVelocity; ///measured in RADIANS/s
     Constraints constraints;
@@ -20,19 +20,18 @@ private:
 
     Vector resultantForce; ///sum of all forces applied between time steps
     double resultantAngularAcceleration; /// ????? (angular forces not implemented yet)
+
 public:
-    Rigidbody();
-    Rigidbody(Rigidbody const& rb);
-    Rigidbody(Transform const& t, double const& mass, Constraints const& c=(Constraints)0);
-    Rigidbody(Transform const& t, double const& mass, double const& bounciness, double const& frictionCoefficient, double const& airDragCoefficient);
-    Rigidbody(Vector const& position, double const& mass, Constraints const& c=(Constraints)0);
-    Rigidbody(Vector const& position, double const& mass, double const& bounciness, double const& frictionCoefficient, double const& airDragCoefficient);
+    Rigidbody() = delete;
+    Rigidbody(Rigidbody const& rb) = delete;
+    Rigidbody(Transform* t);
+    Rigidbody(Transform* t, double const& mass, Constraints const& c=(Constraints)0);
+    Rigidbody(Transform* t, double const& mass, double const& bounciness, double const& frictionCoefficient, double const& airDragCoefficient);
     ~Rigidbody();
     Rigidbody& operator=(Rigidbody const& rb);
 
-
-    void step(double const& deltaTime);
     void addForce(Vector const& force, ForceMode forceMode=(ForceMode)1); ///default Force
+    void step(double const& deltaTime); ///TEMPORARILY PUBLIC for testing purposes
 
     bool const& getActivation() const;
     void setActivation(bool a);
@@ -54,6 +53,8 @@ public:
     void setBounciness(double const& b);
     void setFrictionCoefficient(double const& f);
     void setAirDragCoefficient(double const& a);
+
+    friend class PhysicsHandler; ///would be nice for this to only have special access to step(double)
 };
 
 
