@@ -24,7 +24,7 @@ private:
 public:
     Rigidbody() = delete;
     Rigidbody(Rigidbody const& rb) = delete;
-    Rigidbody(Transform* t);
+    explicit Rigidbody(Transform* t);
     Rigidbody(Transform* t, double const& mass, Constraints const& c=(Constraints)0);
     Rigidbody(Transform* t, double const& mass, double const& bounciness, double const& frictionCoefficient, double const& airDragCoefficient);
     ~Rigidbody();
