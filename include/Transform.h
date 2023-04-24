@@ -11,8 +11,8 @@ private:
 public:
     Transform();
     Transform(Transform const& t);
-    Transform(Vector const& position, double const& rotation_rad);
-    Transform(double const& pos_x, double const& pos_y, double const& rotation_rad);
+    Transform(Vector const& position, double rotation_rad);
+    Transform(double pos_x, double pos_y, double rotation_rad);
     Transform& operator=(Transform const& t);
     ~Transform();
 
@@ -21,19 +21,19 @@ public:
     friend std::ostream& operator<<(std::ostream& os, Transform const& t);
 
     void move(Vector const& v);
-    void move(double const& move_x, double const& move_y);
-    void rotate(double const& angle_rad);
-    void rotateDeg(double const& angle_deg);
+    void move(double move_x, double move_y);
+    void rotate(double angle_rad);
+    void rotateDeg(double angle_deg);
 
-    static double degToRad(double const& angle);
-    static double radToDeg(double const& angle);
-    static double clampAngleDeg(double const& angle);
-    static double clampAngleRad(double const& angle);
+    static double degToRad(double angle);
+    static double radToDeg(double angle);
+    static double clampAngleDeg(double angle);
+    static double clampAngleRad(double angle);
     Vector up() const;
     Vector right() const;
 
     Vector const& getPosition() const;
-    double const& getRotation() const;
+    double getRotation() const;
     double getRotationDeg() const;
 
     ///friends

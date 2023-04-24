@@ -36,8 +36,8 @@ public:
     static Vector const& right();
     static Vector const& zero();
 
-    double const& getX() const;
-    double const& getY() const;
+    double getX() const;
+    double getY() const;
 
     ///friends
 };

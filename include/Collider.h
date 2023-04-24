@@ -13,6 +13,8 @@ public:
     ~Collider();
     Collider& operator=(Collider const& col) = delete;
 
+    Vector const& getPosition() const;
+    double getRotation() const;
     Transform const& getTransform() const;
     Rigidbody const& getRigidbody() const;
 };

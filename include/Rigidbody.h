@@ -25,34 +25,34 @@ public:
     Rigidbody() = delete;
     Rigidbody(Rigidbody const& rb) = delete;
     explicit Rigidbody(Transform* t);
-    Rigidbody(Transform* t, double const& mass, Constraints const& c=(Constraints)0);
-    Rigidbody(Transform* t, double const& mass, double const& bounciness, double const& frictionCoefficient, double const& airDragCoefficient);
+    Rigidbody(Transform* t, double mass, Constraints const& c=(Constraints)0);
+    Rigidbody(Transform* t, double mass, double bounciness, double frictionCoefficient, double airDragCoefficient);
     ~Rigidbody();
     Rigidbody& operator=(Rigidbody const& rb);
 
     void addForce(Vector const& force, ForceMode forceMode=(ForceMode)1); ///default Force
-    void step(double const& deltaTime); ///TEMPORARILY PUBLIC for testing purposes
+    void step(double deltaTime); ///TEMPORARILY PUBLIC for testing purposes
 
     bool const& getActivation() const;
     void setActivation(bool a);
 
     Transform const& getTransform() const;
     Vector const& getPosition() const;
-    double const& getRotation() const;
+    double getRotation() const;
 
     Vector const& getVelocity() const;
-    double const& getAngularVelocity() const;
+    double getAngularVelocity() const;
     Vector const& getResultantForce() const;
 
     Constraints const& getConstraints() const;
-    double const& getBounciness() const;
-    double const& getFrictionCoefficient() const;
-    double const& getAirDragCoefficient() const;
+    double getBounciness() const;
+    double getFrictionCoefficient() const;
+    double getAirDragCoefficient() const;
 
     void setConstraints(Constraints const& c);
-    void setBounciness(double const& b);
-    void setFrictionCoefficient(double const& f);
-    void setAirDragCoefficient(double const& a);
+    void setBounciness(double b);
+    void setFrictionCoefficient(double f);
+    void setAirDragCoefficient(double a);
 
     friend class PhysicsHandler; ///would be nice for this to only have special access to step(double)
 };

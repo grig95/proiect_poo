@@ -51,20 +51,20 @@ Vector& Vector::operator-=(Vector const& v) {
     return *this;
 }
 
-Vector& Vector::operator*=(double const& s) {
+Vector& Vector::operator*=(double s) {
     x*=s;
     y*=s;
     return *this;
 }
 
-Vector Vector::operator/(double const& s) const {
+Vector Vector::operator/(double s) const {
     Vector vn(*this);
     vn.x/=s;
     vn.y/=s;
     return vn;
 }
 
-Vector& Vector::operator/=(double const& s) {
+Vector& Vector::operator/=(double s) {
     x/=s;
     y/=s;
     return *this;
@@ -105,5 +105,5 @@ Vector const& Vector::zero() {
 
 
 ///getters, setters
-double const& Vector::getX() const { return x; }
-double const& Vector::getY() const { return y; }
+double Vector::getX() const { return x; }
+double Vector::getY() const { return y; }

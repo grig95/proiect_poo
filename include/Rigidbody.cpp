@@ -3,11 +3,12 @@
 ///constructors, destructor, operators
 Rigidbody::Rigidbody(Transform* t) : transform(t), mass(1), velocity(), angularVelocity(0), constraints((Constraints)0), bounciness(1), frictionCoefficient(0), airDragCoefficient(0), active(true), resultantForce(), resultantAngularAcceleration(0) {}
 
-Rigidbody::Rigidbody(Transform* t, double const& mass, Constraints const& c) : transform(t), mass(mass), velocity(), angularVelocity(0), constraints(c), bounciness(1), frictionCoefficient(0), airDragCoefficient(0), active(true), resultantForce(), resultantAngularAcceleration(0) {}
+Rigidbody::Rigidbody(Transform* t, double mass, Constraints const& c) : transform(t), mass(mass), velocity(), angularVelocity(0), constraints(c), bounciness(1), frictionCoefficient(0), airDragCoefficient(0), active(true), resultantForce(), resultantAngularAcceleration(0) {}
 
-Rigidbody::Rigidbody(Transform* t, double const& mass, double const& bounciness, double const& frictionCoefficient, double const& airDragCoefficient) : transform(t), mass(mass), velocity(), angularVelocity(0), constraints((Constraints)0), bounciness(bounciness), frictionCoefficient(frictionCoefficient), airDragCoefficient(airDragCoefficient), active(true), resultantForce(), resultantAngularAcceleration(0) {}
+Rigidbody::Rigidbody(Transform* t, double mass, double bounciness, double frictionCoefficient, double airDragCoefficient) : transform(t), mass(mass), velocity(), angularVelocity(0), constraints((Constraints)0), bounciness(bounciness), frictionCoefficient(frictionCoefficient), airDragCoefficient(airDragCoefficient), active(true), resultantForce(), resultantAngularAcceleration(0) {}
 
-Rigidbody& Rigidbody::operator=(Rigidbody const& rb) {
+
+Rigidbody& Rigidbody::operator=(Rigidbody const& rb) { // cppcheck-suppress operatorEqVarError
     if(this==&rb)
         return *this;
 
@@ -37,7 +38,7 @@ enum Rigidbody::ForceMode : uint8_t {
     Acceleration=2
 };
 
-void Rigidbody::step(double const& deltaTime) {
+void Rigidbody::step(double deltaTime) {
     if(!active)
         return;
 
@@ -83,18 +84,18 @@ void Rigidbody::setActivation(bool a) {
 
 Transform const& Rigidbody::getTransform() const { return *transform; }
 Vector const& Rigidbody::getPosition() const { return transform->getPosition(); }
-double const& Rigidbody::getRotation() const { return transform->getRotation(); }
+double Rigidbody::getRotation() const { return transform->getRotation(); }
 
 Vector const& Rigidbody::getVelocity() const { return velocity; }
-double const& Rigidbody::getAngularVelocity() const { return angularVelocity; }
+double Rigidbody::getAngularVelocity() const { return angularVelocity; }
 Vector const& Rigidbody::getResultantForce() const { return resultantForce; }
 
 Rigidbody::Constraints const& Rigidbody::getConstraints() const { return constraints; }
-double const& Rigidbody::getBounciness() const { return bounciness; }
-double const& Rigidbody::getFrictionCoefficient() const { return frictionCoefficient; }
-double const& Rigidbody::getAirDragCoefficient() const { return airDragCoefficient; }
+double Rigidbody::getBounciness() const { return bounciness; }
+double Rigidbody::getFrictionCoefficient() const { return frictionCoefficient; }
+double Rigidbody::getAirDragCoefficient() const { return airDragCoefficient; }
 
 void Rigidbody::setConstraints(Constraints const& c) { constraints=c; }
-void Rigidbody::setBounciness(double const& b) { bounciness=b; }
-void Rigidbody::setFrictionCoefficient(double const& f) { frictionCoefficient=f; }
-void Rigidbody::setAirDragCoefficient(double const& a) { airDragCoefficient=a; }
+void Rigidbody::setBounciness(double b) { bounciness=b; }
+void Rigidbody::setFrictionCoefficient(double f) { frictionCoefficient=f; }
+void Rigidbody::setAirDragCoefficient(double a) { airDragCoefficient=a; }

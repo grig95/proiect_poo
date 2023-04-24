@@ -8,9 +8,11 @@ private:
     double radius;
 public:
     CircleCollider() = delete;
-    CircleCollider(Transform* t, Rigidbody* rb, double const& radius=1);
+    CircleCollider(Transform* t, Rigidbody* rb, double radius=1);
     ~CircleCollider();
     CircleCollider& operator=(CircleCollider const& cc) = delete;
+
+    double getRadius() const;
 };
 
 
