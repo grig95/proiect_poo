@@ -25,14 +25,14 @@ Vector Vector::operator-(Vector const &v) const {
     return vn;
 }
 
-Vector Vector::operator*(double const &s) const {
+Vector Vector::operator*(double s) const {
     Vector vn(*this);
     vn.x*=s;
     vn.y*=s;
     return vn;
 }
 
-Vector operator*(double const &s, Vector const &v) {
+Vector operator*(double s, Vector const &v) {
     Vector vn(v);
     vn.x*=s;
     vn.y*=s;

@@ -17,13 +17,13 @@ public:
 
     Vector operator+(Vector const &v) const;
     Vector operator-(Vector const &v) const;
-    Vector operator*(double const &s) const;
-    friend Vector operator*(double const &s, Vector const &v);
+    Vector operator*(double s) const;
+    friend Vector operator*(double s, Vector const &v);
     Vector& operator+=(Vector const &v);
     Vector& operator-=(Vector const &v);
-    Vector& operator*=(double const &s);
-    Vector operator/(double const &s) const;
-    Vector& operator/=(double const &s);
+    Vector& operator*=(double s);
+    Vector operator/(double s) const;
+    Vector& operator/=(double s);
 
     bool operator==(Vector const& v) const;
 
