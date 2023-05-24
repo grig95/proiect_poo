@@ -68,9 +68,9 @@ void CollisionHandler::CircleCircle(CircleCollider& col1, CircleCollider& col2, 
         Vector vel1, vel2;
         int c=0;
         try { vel1=col1.getRigidbody().getVelocity(); }
-        catch(missing_reference& mr) { vel1=Vector::zero(); c++; }
+        catch(missing_reference&) { vel1=Vector::zero(); c++; }
         try { vel2=col2.getRigidbody().getVelocity(); }
-        catch(missing_reference& mr) { vel2=Vector::zero(); c++; }
+        catch(missing_reference&) { vel2=Vector::zero(); c++; }
 
         if(c==2)
         {
@@ -105,10 +105,10 @@ void CollisionHandler::CircleCircle(CircleCollider& col1, CircleCollider& col2, 
 
         double rotVel;
         try { rotVel=col1.getRigidbody().getAngularVelocity(); }
-        catch(missing_reference& mr) { rotVel=0; }
+        catch(missing_reference&) { rotVel=0; }
         transform1.rotate(-rotVel*timeSinceFirstContact);
         try { rotVel=col2.getRigidbody().getAngularVelocity(); }
-        catch(missing_reference& mr) { rotVel=0; }
+        catch(missing_reference&) { rotVel=0; }
         transform2.rotate(-rotVel*timeSinceFirstContact);
 
         Vector contactPoint = transform1.getPosition() + (transform2.getPosition()-transform1.getPosition()).normalized() *

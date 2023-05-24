@@ -21,8 +21,8 @@ Rigidbody* RigidbodyBuilder::build() {
 
 
 ///setters
-RigidbodyBuilder& RigidbodyBuilder::setMass(double m) { mass=m; }
+RigidbodyBuilder& RigidbodyBuilder::setMass(double m) { mass=m; return *this; }
 RigidbodyBuilder& RigidbodyBuilder::setBounciness(double b) { bounciness=b; }
-RigidbodyBuilder& RigidbodyBuilder::setFrictionCoefficient(double f) { frictionCoefficient=f; }
-RigidbodyBuilder& RigidbodyBuilder::setAirDragCoefficient(double d) { airDragCoefficient=d; }
-RigidbodyBuilder& RigidbodyBuilder::setConstraints(Rigidbody::Constraints c) { constraints=c; }
+RigidbodyBuilder& RigidbodyBuilder::setFrictionCoefficient(double f) { frictionCoefficient=f; return *this; }
+RigidbodyBuilder& RigidbodyBuilder::setAirDragCoefficient(double d) { airDragCoefficient=d; return *this; }
+RigidbodyBuilder& RigidbodyBuilder::setConstraints(Rigidbody::Constraints c) { constraints=c; return *this; }

@@ -269,7 +269,7 @@ Shape& Shape::setSize(Vector size) {
 
 
 ///common getters
-std::size_t Shape::getPointCount() const { // cppcheck-suppress missingReturn
+std::size_t Shape::getPointCount() const { /// "Error: Not all code paths return a value" ???????
     switch(type) {
         case Type::Circle:
             return circle->getPointCount();
@@ -283,7 +283,7 @@ std::size_t Shape::getPointCount() const { // cppcheck-suppress missingReturn
 }
 
 Vector Shape::getPoint(std::size_t index) const {
-    sf::Vector2f point; // cppcheck-suppress missingReturn
+    sf::Vector2f point; /// "Error: Not all code paths return a value" ???????
     switch(type) {
         case Type::Circle:
             point=circle->getPoint(index);

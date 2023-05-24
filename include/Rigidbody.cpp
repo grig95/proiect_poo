@@ -84,8 +84,10 @@ void Rigidbody::addForce(Vector const& force, ForceMode forceMode) {
             break;
         case ForceMode::Impulse:
             resultantImpulse+=force;
+            break;
         case ForceMode::VelocityChange:
             resultantImpulse+=force*mass;
+            break;
     }
 }
 
