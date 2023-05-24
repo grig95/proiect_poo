@@ -17,6 +17,7 @@ public:
 
     Vector operator+(Vector const &v) const;
     Vector operator-(Vector const &v) const;
+    Vector operator-() const;
     Vector operator*(double s) const;
     friend Vector operator*(double s, Vector const &v);
     Vector& operator+=(Vector const &v);

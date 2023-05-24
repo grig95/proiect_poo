@@ -21,6 +21,8 @@ std::ostream& operator<<(std::ostream& os, Transform const& t) {
 }
 
 ///functionality
+void Transform::setPosition(Vector const& pos) { position=pos; }
+
 void Transform::move(Vector const& v) { position+=v; }
 
 void Transform::move(double move_x, double move_y) {

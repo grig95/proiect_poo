@@ -25,6 +25,10 @@ Vector Vector::operator-(Vector const &v) const {
     return vn;
 }
 
+Vector Vector::operator-() const {
+    return {-x, -y};
+}
+
 Vector Vector::operator*(double s) const {
     Vector vn(*this);
     vn.x*=s;

@@ -7,12 +7,17 @@ class CircleCollider : public Collider {
 private:
     double radius;
 public:
-    CircleCollider() = delete;
-    CircleCollider(Transform* t, Rigidbody* rb, double radius=1);
+    CircleCollider();
+    CircleCollider(CircleCollider const& col);
+    explicit CircleCollider(double radius=1);
     ~CircleCollider();
-    CircleCollider& operator=(CircleCollider const& cc) = delete;
+    CircleCollider& operator=(CircleCollider const& cc);
+
+    Collider* createCopy() const override;
 
     double getRadius() const;
+
+    friend class CollisionHandler;
 };
 
 

@@ -1,42 +1,60 @@
 #ifndef OOP_RIGIDBODY_H
 #define OOP_RIGIDBODY_H
 
-#include "Transform.h"
+#include "ObjectAttachment.h"
+#include "Vector.h"
 
-class Rigidbody {
+#include <cstdint>
+
+class Transform;
+
+class Rigidbody : public ObjectAttachment {
 public:
-    enum Constraints : uint8_t;
-    enum ForceMode : uint8_t;
+    enum class Constraints : uint8_t {
+        Free=0,
+        FreezeX=1,
+        FreezeY=2,
+        FreezeRotation=4
+    };
+    enum class ForceMode : uint8_t {
+        Force,
+        Acceleration,
+        Impulse,
+        VelocityChange
+    };
 private:
-    Transform *transform;
-    double mass;
-    Vector velocity;
-    double angularVelocity; ///measured in RADIANS/s
-    Constraints constraints;
-    double bounciness;
-    double frictionCoefficient;
-    double airDragCoefficient; ///also takes into account the DENSITY of the fluid
-    bool active;
+    ///when changing any of the default values, don't forget to also change them in RigidbodyBuilder
+    Transform* transform = nullptr;
+    double mass = 1;
+    Vector velocity = Vector::zero();
+    double angularVelocity = 0; ///measured in RADIANS/s
+    Constraints constraints = Constraints::Free;
+    double bounciness = 1; ///fraction of energy turned to movement energy after impact
+    double frictionCoefficient = 0; ///fraction of energy lost during impact
+    double airDragCoefficient = 0; ///also takes into account the DENSITY of the fluid and the CROSS SECTIONAL AREA
+    bool active = true;
 
-    Vector resultantForce; ///sum of all forces applied between time steps
-    double resultantAngularAcceleration; /// ????? (angular forces not implemented yet)
+    Vector resultantForce = Vector::zero(); ///sum of all forces applied between time steps
+    Vector resultantImpulse = Vector::zero(); ///sum of all instantaneous forces (Impulse or VelocityChange)
+    double resultantAngularAcceleration = 0; /// ????? (angular forces not implemented yet)
 
+    void step(double deltaTime); ///meant to only be accessed by PhysicsHandler
+
+    void setTransform(Transform* t); ///meant to only be accessed by Object
 public:
-    Rigidbody() = delete;
-    Rigidbody(Rigidbody const& rb) = delete;
-    explicit Rigidbody(Transform* t);
-    Rigidbody(Transform* t, double mass, Constraints const& c=(Constraints)0);
-    Rigidbody(Transform* t, double mass, double bounciness, double frictionCoefficient, double airDragCoefficient);
+    Rigidbody();
+    Rigidbody(Rigidbody const& rb);
+    Rigidbody(double mass, Constraints const& c=Constraints::Free);
+    Rigidbody(double mass, double bounciness, double frictionCoefficient, double airDragCoefficient, Constraints const& c=Constraints::Free);
     ~Rigidbody();
     Rigidbody& operator=(Rigidbody const& rb);
 
-    void addForce(Vector const& force, ForceMode forceMode=(ForceMode)1); ///default Force
-    void step(double deltaTime); ///TEMPORARILY PUBLIC for testing purposes
+    void addForce(Vector const& force, ForceMode forceMode=ForceMode::Force); ///default Force
 
     bool const& getActivation() const;
     void setActivation(bool a);
 
-    Transform const& getTransform() const;
+    Transform& getTransform() const;
     Vector const& getPosition() const;
     double getRotation() const;
 
@@ -54,7 +72,8 @@ public:
     void setFrictionCoefficient(double f);
     void setAirDragCoefficient(double a);
 
-    friend class PhysicsHandler; ///would be nice for this to only have special access to step(double)
+    friend class Object; ///meant to only access setTransform()
+    friend class PhysicsHandler;
 };
 
 

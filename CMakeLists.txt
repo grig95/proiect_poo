@@ -93,7 +93,7 @@ endif()
 ###############################################################################
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
-add_executable(${PROJECT_NAME} main.cpp include/Vector.cpp include/Vector.h include/Transform.cpp include/Transform.h include/Rigidbody.cpp include/Rigidbody.h include/Collider.cpp include/Collider.h include/CircleCollider.cpp include/CircleCollider.h)
+add_executable(${PROJECT_NAME} main.cpp include/Vector.cpp include/Vector.h include/Transform.cpp include/Transform.h include/Rigidbody.cpp include/Rigidbody.h include/Collider.cpp include/Collider.h include/CircleCollider.cpp include/CircleCollider.h include/Object.cpp include/Object.h include/Behaviour.cpp include/Behaviour.h include/appexceptions.cpp include/appexceptions.h include/ObjectAttachment.cpp include/ObjectAttachment.h include/PhysicsHandler.cpp include/PhysicsHandler.h include/CollisionHandler.cpp include/CollisionHandler.h include/Collision.cpp include/Collision.h include/ObjectHandler.cpp include/ObjectHandler.h include/Shape.cpp include/Shape.h include/RigidbodyBuilder.cpp include/RigidbodyBuilder.h include/ObjectFactory.cpp include/ObjectFactory.h)
 
 ###############################################################################
 

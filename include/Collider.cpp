@@ -1,14 +1,59 @@
 #include "Collider.h"
+#include "CollisionHandler.h"
+#include "Transform.h"
+#include "appexceptions.h"
 
-///constructor and destructor
-Collider::Collider(Transform* t, Rigidbody* rb) : transform(t), rigidbody(rb) {}
+///constructors, copy assignment and destructor
+Collider::Collider(Type t) : ObjectAttachment(), transform(nullptr), rigidbody(nullptr), type(t) {
+    CollisionHandler::getHandler().track(this);
+}
 
-Collider::~Collider() = default;
+Collider::Collider(Collider const& col) : ObjectAttachment(), transform(nullptr), rigidbody(nullptr), type(col.type) {
+    CollisionHandler::getHandler().track(this);
+}
+
+Collider& Collider::operator=(Collider const& col) {
+    if(this==&col)
+        return *this;
+    type=col.type;
+    return *this;
+}
+
+Collider::~Collider() {
+    CollisionHandler::getHandler().untrack(this);
+}
+
+///setters
+void Collider::setTransform(Transform *t) { transform=t; }
+void Collider::setRigidbody(Rigidbody *rb) { rigidbody=rb; }
 
 ///getters
-Vector const& Collider::getPosition() const { return transform->getPosition(); }
-double Collider::getRotation() const { return transform->getRotation(); }
+Vector const& Collider::getPosition() const {
+    if(transform==nullptr)
+        throw missing_reference("Collider", "getPosition()", "transform");
+    return transform->getPosition();
+}
+double Collider::getRotation() const {
+    if(transform==nullptr)
+        throw missing_reference("Collider", "getRotation()", "transform");
+    return transform->getRotation();
+}
 
-//likely useless
-Transform const& Collider::getTransform() const { return *transform; }
-Rigidbody const& Collider::getRigidbody() const { return *rigidbody; }
+Transform& Collider::getTransform() const {
+    if(transform==nullptr)
+        throw missing_reference("Collider", "getTransform()", "transform");
+    return *transform;
+}
+
+Rigidbody& Collider::getRigidbody() const {
+    if(transform==nullptr)
+        throw missing_reference("Collider", "getRigidbody()", "rigidbody");
+    return *rigidbody;
+}
+
+Collider::Type Collider::getType() const { return type; }
+
+bool Collider::getIsTrigger() const { return isTrigger; }
+
+///setter
+void Collider::setIsTrigger(bool tr) { isTrigger=tr; }

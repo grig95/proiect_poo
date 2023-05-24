@@ -20,6 +20,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, Transform const& t);
 
+    void setPosition(Vector const& pos);
     void move(Vector const& v);
     void move(double move_x, double move_y);
     void rotate(double angle_rad);
