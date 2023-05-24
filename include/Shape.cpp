@@ -101,6 +101,8 @@ void Shape::render(sf::RenderWindow& window) const {
             convex->setPosition(transform->getPosition().getX(), -transform->getPosition().getY());
             window.draw(*convex);
             break;
+        case Type::Undefined: ///small brain error made me do this
+            break;
     }
 }
 
@@ -132,6 +134,8 @@ Shape& Shape::setType(Type t) {
             if(convex==nullptr)
                 convex=new sf::ConvexShape();
             break;
+        case Type::Undefined: ///small brain error made me do this
+            break;
     }
 
     return *this;
@@ -156,6 +160,8 @@ Shape& Shape::setOrigin(Vector const& relCoord) {
             boundingBox=convex->getLocalBounds();
             convex->setOrigin(relCoord.getX(), boundingBox.height-relCoord.getY());
             break;
+        case Type::Undefined: ///small brain error made me do this
+            break;
     }
     return *this;
 }
@@ -169,6 +175,8 @@ Shape& Shape::setFillColor(sf::Color const& color) {
             break;
         case Type::Convex:
             convex->setFillColor(color);
+            break;
+        case Type::Undefined: ///small brain error made me do this
             break;
     }
     return *this;
@@ -185,6 +193,8 @@ Shape& Shape::setOutlineColor(sf::Color const& color) {
         case Type::Convex:
             convex->setOutlineColor(color);
             break;
+        case Type::Undefined: ///small brain error made me do this
+            break;
     }
     return *this;
 }
@@ -199,6 +209,8 @@ Shape& Shape::setOutlineThickness(float thickness) {
             break;
         case Type::Convex:
             convex->setOutlineThickness(thickness);
+            break;
+        case Type::Undefined: ///small brain error made me do this
             break;
     }
     return *this;
@@ -215,6 +227,8 @@ Shape& Shape::setTexture(sf::Texture* texture) {
         case Type::Convex:
             convex->setTexture(texture);
             break;
+        case Type::Undefined: ///small brain error made me do this
+            break;
     }
     return *this;
 }
@@ -229,6 +243,8 @@ Shape& Shape::setTextureRect(sf::IntRect const& texRect) {
             break;
         case Type::Convex:
             convex->setTextureRect(texRect);
+            break;
+        case Type::Undefined: ///small brain error made me do this
             break;
     }
     return *this;
@@ -280,6 +296,7 @@ std::size_t Shape::getPointCount() const { /// "Error: Not all code paths return
         case Type::Undefined:
             throw app_exception("App exception in Shape object: getPointCount() method was called, but object is marked Undefined");
     }
+    throw app_exception("App exception in Shape object: getPointCount() method was called and somehow jumped over the switch statement. Guess that annoying error was right somehow!");
 }
 
 Vector Shape::getPoint(std::size_t index) const {
@@ -297,6 +314,7 @@ Vector Shape::getPoint(std::size_t index) const {
         case Type::Undefined:
             throw app_exception("App exception in Shape object: getPoint() method was called, but object is marked Undefined");
     }
+    throw app_exception("App exception in Shape object: getPoint() method was called and somehow jumped over the switch statement. Guess that annoying error was right somehow!");
 }
 
 ///special getters
