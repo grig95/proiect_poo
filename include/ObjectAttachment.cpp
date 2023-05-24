@@ -8,7 +8,7 @@ ObjectAttachment::ObjectAttachment(Object* obj) : object(obj) {}
 
 ObjectAttachment::ObjectAttachment(ObjectAttachment const& objAtt) : object(nullptr) {}
 
-ObjectAttachment& ObjectAttachment::operator=(ObjectAttachment const& objAtt) { return *this; }
+ObjectAttachment& ObjectAttachment::operator=(ObjectAttachment const& objAtt) { return *this; } // cppcheck-suppress operatorEqVarError
 
 ObjectAttachment::~ObjectAttachment() = default;
 

@@ -157,6 +157,7 @@ Shape& Shape::setOrigin(Vector const& relCoord) {
             convex->setOrigin(relCoord.getX(), boundingBox.height-relCoord.getY());
             break;
     }
+    return *this;
 }
 Shape& Shape::setFillColor(sf::Color const& color) {
     switch(type) {
@@ -268,7 +269,7 @@ Shape& Shape::setSize(Vector size) {
 
 
 ///common getters
-std::size_t Shape::getPointCount() const {
+std::size_t Shape::getPointCount() const { // cppcheck-suppress missingReturn
     switch(type) {
         case Type::Circle:
             return circle->getPointCount();
@@ -282,7 +283,7 @@ std::size_t Shape::getPointCount() const {
 }
 
 Vector Shape::getPoint(std::size_t index) const {
-    sf::Vector2f point;
+    sf::Vector2f point; // cppcheck-suppress missingReturn
     switch(type) {
         case Type::Circle:
             point=circle->getPoint(index);

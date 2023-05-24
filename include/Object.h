@@ -38,7 +38,7 @@ public:
     bool hasCollider();
     bool hasShape();
     template<typename T> bool hasBehaviour() {
-        for(int i=0;i<behaviours.size();i++)
+        for(unsigned int i=0;i<behaviours.size();i++)
         {
             T* b = dynamic_cast<T*>(behaviours[i]);
             if(b!=nullptr)
@@ -65,7 +65,7 @@ public:
         }
 
         if(destroyed!=nullptr)
-            for(int i=0;i<behaviours.size();i++)
+            for(unsigned int i=0;i<behaviours.size();i++)
                 behaviours[i]->onBehaviourDestroy(destroyed);
     }
 
@@ -76,7 +76,7 @@ public:
     Collider& getCollider() const;
     Shape& getShape() const;
     template<typename T> T& getBehaviour() {
-        for(int i=0;i<behaviours.size();i++)
+        for(unsigned int i=0;i<behaviours.size();i++)
         {
             T* b = dynamic_cast<T*>(behaviours[i]);
             if(b!=nullptr)

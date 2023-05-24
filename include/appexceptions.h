@@ -12,7 +12,7 @@ class app_exception : public std::runtime_error {
 private:
     std::string description;
 public:
-    app_exception(std::string const& msj);
+    explicit app_exception(std::string const& msj);
     app_exception(app_exception const& appexcep);
     app_exception(app_exception&& appexcep);
     app_exception& operator=(app_exception const& appexcep);

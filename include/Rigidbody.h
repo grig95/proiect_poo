@@ -44,7 +44,7 @@ private:
 public:
     Rigidbody();
     Rigidbody(Rigidbody const& rb);
-    Rigidbody(double mass, Constraints const& c=Constraints::Free);
+    explicit Rigidbody(double mass, Constraints const& c=Constraints::Free);
     Rigidbody(double mass, double bounciness, double frictionCoefficient, double airDragCoefficient, Constraints const& c=Constraints::Free);
     ~Rigidbody();
     Rigidbody& operator=(Rigidbody const& rb);

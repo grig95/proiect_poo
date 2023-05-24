@@ -17,7 +17,7 @@ Object::~Object() {
         delete collider;
     if(shape!=nullptr)
         delete shape;
-    for(int i=0;i<behaviours.size();i++)
+    for(unsigned int i=0;i<behaviours.size();i++)
         delete behaviours[i];
 
     ObjectHandler::getHandler().untrack(this);
@@ -46,7 +46,7 @@ Object::Object(Object const& obj) : transform(obj.transform), behaviours() {
         shape->setTransform(&transform);
     }
 
-    for(int i=0;i<obj.behaviours.size();i++)
+    for(unsigned int i=0;i<obj.behaviours.size();i++)
     {
         behaviours.push_back(obj.behaviours[i]->createCopy());
         behaviours[i]->attachTo(this);
@@ -64,7 +64,7 @@ void Object::render(sf::RenderWindow& window) const {
 }
 
 void Object::update(double deltaTime) {
-    for(int i=0;i<behaviours.size();i++)
+    for(unsigned int i=0;i<behaviours.size();i++)
         behaviours[i]->update(deltaTime);
 }
 
@@ -121,7 +121,7 @@ void Object::destroyRigidbody() {
     if(collider!=nullptr)
         collider->setRigidbody(nullptr);
 
-    for(int i=0;i<behaviours.size();i++)
+    for(unsigned int i=0;i<behaviours.size();i++)
         behaviours[i]->onRigidbodyDestroy();
 }
 
@@ -131,7 +131,7 @@ void Object::destroyCollider() {
     delete collider;
     collider=nullptr;
 
-    for(int i=0;i<behaviours.size();i++)
+    for(unsigned int i=0;i<behaviours.size();i++)
         behaviours[i]->onColliderDestroy();
 }
 
@@ -141,7 +141,7 @@ void Object::destroyShape() {
     delete shape;
     shape=nullptr;
 
-    for(int i=0;i<behaviours.size();i++)
+    for(unsigned int i=0;i<behaviours.size();i++)
         behaviours[i]->onShapeDestroy();
 }
 

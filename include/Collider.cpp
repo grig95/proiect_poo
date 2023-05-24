@@ -12,7 +12,7 @@ Collider::Collider(Collider const& col) : ObjectAttachment(), transform(nullptr)
     CollisionHandler::getHandler().track(this);
 }
 
-Collider& Collider::operator=(Collider const& col) {
+Collider& Collider::operator=(Collider const& col) { // cppcheck-suppress operatorEqVarError
     if(this==&col)
         return *this;
     type=col.type;
