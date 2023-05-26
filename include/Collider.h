@@ -16,8 +16,8 @@ public:
         CircleCollider
     };
 protected:
-    Transform* transform;
-    Rigidbody* rigidbody;
+    Transform* transform = nullptr;
+    Rigidbody* rigidbody = nullptr;
     Type type = Type::Undefined;
     bool isTrigger = false;
 

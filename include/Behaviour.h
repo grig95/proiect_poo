@@ -14,9 +14,9 @@ protected:
     virtual void onBehaviourDestroy(Behaviour* behaviour) = 0;
 public:
     Behaviour();
-    Behaviour(Behaviour const& b);
+    Behaviour(Behaviour const&) = delete;
     virtual ~Behaviour();
-    Behaviour& operator=(Behaviour const& b);
+    Behaviour& operator=(Behaviour const&) = delete;
 
     virtual Behaviour* createCopy() = 0; ///creates and returns a pointer to a new identical object
 

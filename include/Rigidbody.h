@@ -49,7 +49,7 @@ public:
     ~Rigidbody();
     Rigidbody& operator=(Rigidbody const& rb);
 
-    void addForce(Vector const& force, ForceMode forceMode=ForceMode::Force); ///default Force
+    void addForce(Vector const& force, ForceMode forceMode=ForceMode::Force);
 
     bool const& getActivation() const;
     void setActivation(bool a);

@@ -5,7 +5,7 @@ class Object;
 
 class ObjectAttachment {
 protected:
-    Object* object;
+    Object* object = nullptr;
 
     void attachTo(Object* obj); ///meant to only be used by Object class
     void detach(); ///meant to only be used by Object class
@@ -14,10 +14,8 @@ public:
     explicit ObjectAttachment(Object* obj);
     virtual ~ObjectAttachment();
 
-    ///Doesn't actually copy anything, it exists for conveniently copying derivates without copying the attached object.
-    ObjectAttachment(ObjectAttachment const& objAtt);
-    ///Doesn't actually copy anything, it exists for conveniently copying derivates without copying the attached object.
-    ObjectAttachment& operator=(ObjectAttachment const& objAtt);
+    ObjectAttachment(ObjectAttachment const&) = delete;
+    ObjectAttachment& operator=(ObjectAttachment const&) = delete;
 
     bool isAttached() const;
     Object& getObject() const;

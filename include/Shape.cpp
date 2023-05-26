@@ -101,7 +101,7 @@ void Shape::render(sf::RenderWindow& window) const {
             convex->setPosition(transform->getPosition().getX(), -transform->getPosition().getY());
             window.draw(*convex);
             break;
-        case Type::Undefined: ///small brain error made me do this
+        case Type::Undefined:
             break;
     }
 }
@@ -134,7 +134,7 @@ Shape& Shape::setType(Type t) {
             if(convex==nullptr)
                 convex=new sf::ConvexShape();
             break;
-        case Type::Undefined: ///small brain error made me do this
+        case Type::Undefined:
             break;
     }
 
@@ -160,7 +160,7 @@ Shape& Shape::setOrigin(Vector const& relCoord) {
             boundingBox=convex->getLocalBounds();
             convex->setOrigin(relCoord.getX(), boundingBox.height-relCoord.getY());
             break;
-        case Type::Undefined: ///small brain error made me do this
+        case Type::Undefined:
             break;
     }
     return *this;
@@ -176,7 +176,7 @@ Shape& Shape::setFillColor(sf::Color const& color) {
         case Type::Convex:
             convex->setFillColor(color);
             break;
-        case Type::Undefined: ///small brain error made me do this
+        case Type::Undefined:
             break;
     }
     return *this;
@@ -193,7 +193,7 @@ Shape& Shape::setOutlineColor(sf::Color const& color) {
         case Type::Convex:
             convex->setOutlineColor(color);
             break;
-        case Type::Undefined: ///small brain error made me do this
+        case Type::Undefined:
             break;
     }
     return *this;
@@ -210,7 +210,7 @@ Shape& Shape::setOutlineThickness(float thickness) {
         case Type::Convex:
             convex->setOutlineThickness(thickness);
             break;
-        case Type::Undefined: ///small brain error made me do this
+        case Type::Undefined:
             break;
     }
     return *this;
@@ -227,7 +227,7 @@ Shape& Shape::setTexture(sf::Texture* texture) {
         case Type::Convex:
             convex->setTexture(texture);
             break;
-        case Type::Undefined: ///small brain error made me do this
+        case Type::Undefined:
             break;
     }
     return *this;
@@ -244,7 +244,7 @@ Shape& Shape::setTextureRect(sf::IntRect const& texRect) {
         case Type::Convex:
             convex->setTextureRect(texRect);
             break;
-        case Type::Undefined: ///small brain error made me do this
+        case Type::Undefined:
             break;
     }
     return *this;
@@ -285,7 +285,7 @@ Shape& Shape::setSize(Vector size) {
 
 
 ///common getters
-std::size_t Shape::getPointCount() const { /// "Error: Not all code paths return a value" ???????
+std::size_t Shape::getPointCount() const {
     switch(type) {
         case Type::Circle:
             return circle->getPointCount();
@@ -296,11 +296,11 @@ std::size_t Shape::getPointCount() const { /// "Error: Not all code paths return
         case Type::Undefined:
             throw app_exception("App exception in Shape object: getPointCount() method was called, but object is marked Undefined");
     }
-    throw app_exception("App exception in Shape object: getPointCount() method was called and somehow jumped over the switch statement. Guess that annoying error was right somehow!");
+    throw app_exception("App exception in Shape object: getPointCount() method was called while member type is uninitialized.");
 }
 
 Vector Shape::getPoint(std::size_t index) const {
-    sf::Vector2f point; /// "Error: Not all code paths return a value" ???????
+    sf::Vector2f point;
     switch(type) {
         case Type::Circle:
             point=circle->getPoint(index);
@@ -314,7 +314,7 @@ Vector Shape::getPoint(std::size_t index) const {
         case Type::Undefined:
             throw app_exception("App exception in Shape object: getPoint() method was called, but object is marked Undefined");
     }
-    throw app_exception("App exception in Shape object: getPoint() method was called and somehow jumped over the switch statement. Guess that annoying error was right somehow!");
+    throw app_exception("App exception in Shape object: getPoint() method was called while member type is uninitialized.");
 }
 
 ///special getters

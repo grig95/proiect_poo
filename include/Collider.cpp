@@ -4,11 +4,11 @@
 #include "appexceptions.h"
 
 ///constructors, copy assignment and destructor
-Collider::Collider(Type t) : ObjectAttachment(), transform(nullptr), rigidbody(nullptr), type(t) {
+Collider::Collider(Type t) : ObjectAttachment(), type(t) {
     CollisionHandler::getHandler().track(this);
 }
 
-Collider::Collider(Collider const& col) : ObjectAttachment(), transform(nullptr), rigidbody(nullptr), type(col.type) {
+Collider::Collider(Collider const& col) : ObjectAttachment(), type(col.type) {
     CollisionHandler::getHandler().track(this);
 }
 
