@@ -33,6 +33,7 @@
 #include "include/ObjectHandler.h"
 #include "include/RigidbodyBuilder.h"
 #include "include/ObjectFactory.h"
+#include "include/Shape.h"
 
 #include "include/appexceptions.h"
 
@@ -69,7 +70,14 @@ int main() {
     Object* circle = ObjectFactory::getSolidCircle(0.5);
     circle->getTransform().setPosition(Vector(-3, 0));
 
-    Object* circle2 = ObjectFactory::getSolidCircle(0.25);
+    Object* circle2 = new Object();
+    RigidbodyBuilder b; b.reset();
+    circle2->attachRigidbody(*RigidbodyBuilder().setMass(0.5).setBounciness(1).setFrictionCoefficient(0)
+            .setAirDragCoefficient(0).setConstraints(Rigidbody::Constraints::Free).build());
+    circle2->attachCollider(*(new CircleCollider(0.25)));
+    Shape* circleShape=new Shape(0.25);
+    circleShape->setFillColor(sf::Color::Magenta);
+    circle2->attachShape(*circleShape);
     circle2->getTransform().setPosition({3, 0});
     circle2->getRigidbody().addForce({-2, 0}, Rigidbody::ForceMode::Impulse);
 
