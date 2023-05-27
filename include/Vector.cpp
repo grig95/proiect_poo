@@ -109,8 +109,8 @@ Vector const& Vector::zero() {
 
 
 ///getters, setters
-void Vector::setX(double x) { this->x=x; }
-void Vector::setY(double y) { this->y=y; }
+void Vector::setX(double newX) { x=newX; }
+void Vector::setY(double newY) { y=newY; }
 
 double Vector::getX() const { return x; }
 double Vector::getY() const { return y; }

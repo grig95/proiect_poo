@@ -39,11 +39,11 @@ public:
     }
 
     ///these will copy the parameter to a new location in memory and keep that
-    void setRigidbody(Rigidbody& rb);
+    void setRigidbody(Rigidbody const& rb);
     void setRigidbody(Rigidbody&& rb);
-    void setCollider(Collider& col);
+    void setCollider(Collider const& col);
     void setCollider(Collider&& col);
-    void setShape(Shape& sh);
+    void setShape(Shape const& sh);
     void setShape(Shape&& sh);
     void addBehaviour(Behaviour& behaviour);
     void addBehaviour(Behaviour&& behaviour);
@@ -63,7 +63,6 @@ public:
             T* b=dynamic_cast<T*>(*it);
             if(b!=nullptr)
             {
-                destroyed=*it;
                 behaviours.erase(it);
                 delete b;
                 break;

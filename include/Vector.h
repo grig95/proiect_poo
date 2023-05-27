@@ -37,8 +37,8 @@ public:
     static Vector const& right();
     static Vector const& zero();
 
-    void setX(double x);
-    void setY(double y);
+    void setX(double newX);
+    void setY(double newY);
 
     double getX() const;
     double getY() const;

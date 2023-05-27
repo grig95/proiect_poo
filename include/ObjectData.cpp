@@ -32,6 +32,9 @@ ObjectData::ObjectData(ObjectData const& obd) : transform(obd.transform) {
 }
 
 ObjectData& ObjectData::operator=(ObjectData const& obd) {
+    if(this==&obd)
+        return *this;
+
     transform=obd.transform;
 
     delete rigidbody;
@@ -79,7 +82,7 @@ bool ObjectData::hasShape() { return shape!=nullptr; }
 
 
 ///setters
-void ObjectData::setRigidbody(Rigidbody& rb) {
+void ObjectData::setRigidbody(Rigidbody const& rb) {
     delete rigidbody;
     rigidbody=new Rigidbody(rb);
 }
@@ -88,7 +91,7 @@ void ObjectData::setRigidbody(Rigidbody&& rb) {
     rigidbody=new Rigidbody(rb);
 }
 
-void ObjectData::setCollider(Collider& col) {
+void ObjectData::setCollider(Collider const& col) {
     delete collider;
     collider=col.createCopy();
 }
@@ -97,7 +100,7 @@ void ObjectData::setCollider(Collider&& col) {
     collider=col.createCopy();
 }
 
-void ObjectData::setShape(Shape& sh) {
+void ObjectData::setShape(Shape const& sh) {
     delete shape;
     shape=new Shape(sh);
 }
