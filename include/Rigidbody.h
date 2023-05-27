@@ -64,6 +64,7 @@ public:
     Vector const& getVelocity() const;
     double getAngularVelocity() const;
     Vector const& getResultantForce() const;
+    Vector const& getResultantImpulse() const;
 
     double getMass() const;
     Constraints const& getConstraints() const;
@@ -71,6 +72,7 @@ public:
     double getFrictionCoefficient() const;
     double getAirDragCoefficient() const;
 
+    void setMass(double m);
     void setConstraints(Constraints const& c);
     void setBounciness(double b);
     void setFrictionCoefficient(double f);

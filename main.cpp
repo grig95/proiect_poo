@@ -56,10 +56,14 @@
 #include <X11/Xlib.h>
 #endif
 
+void callMyUnusedFunctions();
+
 int main() {
     #ifdef __linux__
     XInitThreads();
     #endif
+
+    callMyUnusedFunctions();
 
     sf::RenderWindow window;
     // NOTE: sync with env variable APP_WINDOW from .github/workflows/cmake.yml:30
@@ -123,4 +127,47 @@ int main() {
 
 
     return 0;
+}
+
+
+void callMyUnusedFunctions() {
+    Object* object=new Object();
+
+    Rigidbody* rb=new Rigidbody();
+    rb->setMass(2);
+    rb->setConstraints(Rigidbody::Constraints::FreezeRotation);
+    rb->setBounciness(0.9);
+    rb->setAirDragCoefficient(0.1);
+    rb->setFrictionCoefficient(0.5);
+    rb->setActivation(true);
+    rb->getConstraints();
+    rb->getResultantForce();
+    rb->getResultantImpulse();
+    rb->getAirDragCoefficient();
+    Rigidbody::bouncinessCombinationFunction(1, 2); ///this is used AND reached in CollisionHandler, but for some reason cppcheck thinks otherwise
+
+    CircleCollider* collider=new CircleCollider();
+    collider->setIsTrigger(false);
+
+    Shape* shape=new Shape();
+    shape->setType(Shape::Type::Circle); ///I'm pretty sure most of the functions from Shape are currently unused but for some reason cppcheck only complains about this one
+
+    Shooter* shooter=new Shooter(ObjectDataFactory::getSolidCircleData(), 1, 1);
+
+    object->attachRigidbody(*rb);
+    object->attachCollider(*collider);
+    object->attachShape(*shape);
+    object->attachBehaviour(*shooter);
+
+    if(object->hasCollider())
+        object->getCollider();
+    if(object->hasShape())
+        object->getShape();
+
+    object->destroyRigidbody();
+    object->destroyCollider();
+    object->destroyShape();
+    object->destroyBehaviour<Shooter>();
+
+    delete object;
 }

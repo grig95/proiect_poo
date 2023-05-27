@@ -140,6 +140,7 @@ double Rigidbody::getRotation() const {
 Vector const& Rigidbody::getVelocity() const { return velocity; }
 double Rigidbody::getAngularVelocity() const { return angularVelocity; }
 Vector const& Rigidbody::getResultantForce() const { return resultantForce; }
+Vector const& Rigidbody::getResultantImpulse() const { return resultantImpulse; }
 
 double Rigidbody::getMass() const { return mass; }
 Rigidbody::Constraints const& Rigidbody::getConstraints() const { return constraints; }
@@ -148,6 +149,7 @@ double Rigidbody::getFrictionCoefficient() const { return frictionCoefficient; }
 double Rigidbody::getAirDragCoefficient() const { return airDragCoefficient; }
 
 void Rigidbody::setTransform(Transform *t) { transform = t; }
+void Rigidbody::setMass(double m) { mass=m; }
 void Rigidbody::setConstraints(Constraints const& c) { constraints=c; }
 void Rigidbody::setBounciness(double b) { bounciness=b; }
 void Rigidbody::setFrictionCoefficient(double f) { frictionCoefficient=f; }

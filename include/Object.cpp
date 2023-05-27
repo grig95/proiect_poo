@@ -143,8 +143,8 @@ void Object::attachShape(Shape& sh) {
     if(sh.isAttached())
         throw unique_bind_error("Object", "Shape");
 
-    shape->attachTo(this);
-    shape->setTransform(&transform);
+    sh.attachTo(this);
+    sh.setTransform(&transform);
     shape=&sh;
 }
 
