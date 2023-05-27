@@ -22,7 +22,7 @@ protected:
     void onColliderChange(Collider&) override;
     void onShapeChange(Shape&) override;
 public:
-    Rotator(double rotationSpeed);
+    explicit Rotator(double rotationSpeed);
     Rotator(Rotator const& rotator);
     Rotator& operator=(Rotator const&);
     ~Rotator();
