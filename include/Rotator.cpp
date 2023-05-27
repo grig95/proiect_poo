@@ -7,7 +7,11 @@ Rotator::Rotator(double rotationSpeed) : rotationSpeed(rotationSpeed) {}
 Rotator::Rotator(Rotator const& rotator) : rotationSpeed(rotator.rotationSpeed) {}
 
 Rotator& Rotator::operator=(Rotator const& rotator) {
+    if(this==&rotator)
+        return *this;
+
     rotationSpeed=rotator.rotationSpeed;
+    return *this;
 }
 
 Rotator::~Rotator() = default;
