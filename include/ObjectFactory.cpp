@@ -1,19 +1,15 @@
 #include "ObjectFactory.h"
+#include "ObjectDataFactory.h"
 #include "Object.h"
+#include "ObjectData.h"
 #include "Rigidbody.h"
 #include "CircleCollider.h"
 #include "Shape.h"
 
-Object* ObjectFactory::getSolidCircle(double radius) {
-    Rigidbody* rb=new Rigidbody();
-    CircleCollider* collider=new CircleCollider(radius);
-    Shape* shape=new Shape(radius);
-    shape->setFillColor(sf::Color(10, 10, 170));
+Object* ObjectFactory::createSolidCircle(double radius) {
+    return new Object(ObjectDataFactory::getSolidCircleData(radius));
+}
 
-    Object* obj=new Object();
-    obj->attachRigidbody(*rb);
-    obj->attachCollider(*collider);
-    obj->attachShape(*shape);
-
-    return obj;
+Object* ObjectFactory::createShooter(ObjectData const& prefab, double speed, double cooldown) {
+    return new Object(ObjectDataFactory::getShooterData(prefab, speed, cooldown));
 }

@@ -5,6 +5,8 @@
 
 class Collider;
 class CircleCollider;
+class Collision;
+class Vector;
 
 class CollisionHandler {
 private:
@@ -14,7 +16,10 @@ private:
     void track(Collider* collider);
     void untrack(Collider* collider);
 
-    ///When writing collision detection functions, don't forget to treat and resolve the case in which neither collider has a rigidbody.
+    static void resolveCollision(Collision const& collision);
+    static Vector getSurfaceToNormal(Vector const& normal);
+
+    ///When writing collision detection functions, don't forget to treat and resolve the case in which neither collider has a rigidbody or they are both inactive.
     void CircleCircle(CircleCollider& col1, CircleCollider& col2, double deltaTime);
 public:
     ~CollisionHandler();

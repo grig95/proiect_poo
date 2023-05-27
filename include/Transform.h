@@ -23,6 +23,8 @@ public:
     void setPosition(Vector const& pos);
     void move(Vector const& v);
     void move(double move_x, double move_y);
+    void setRotation(double rotation_rad);
+    void setRotationDeg(double rotation_deg);
     void rotate(double angle_rad);
     void rotateDeg(double angle_deg);
 

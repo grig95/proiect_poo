@@ -1,7 +1,20 @@
+/// ---- QUESTIONS ----
+/// 1. Behaviour has 4 virtual methods that are are called when various attachments of the Object it is attached to are deleted, so it knows when
+/// potential references to these attachments are invalidated. Should these be purely virtual to make sure the programmer doesn't accidentally forget
+/// to treat such cases or should they just do nothing by default to not be overly annoying?
+
 /// ---- TO DO ----
 /// 1. Give Shape a depth/order/z-coordinate member and move the rendering functionality from ObjectHandler to allow shapes to be correctly drawn over
 /// each other.
-/// 2. Implement collision events.
+/// 2. Have Object keep track of its last Transform and use that to determine speed and rotational speed when it collides with rigidbody objects.
+/// 3. Implement collision events.
+
+/// ---- REMEMBER ----
+/// 1. Specialize Rigidbody's addForceToRelativePoint() function.
+/// 2. Check the physics behind the momentum distribution in a collision.
+/// 3. In Object, the Behaviour.start() method is called for initialization everytime a new Behaviour is attached. This can create problems if behaviours
+/// that depend on each other are not attached in the proper order or in cases of circular dependencies. One possible fix is implementing a BehaviourStart
+/// event at the beginning of each frame and having all behaviours' start methods (that aren't initialized yet) be called then.
 
 /// ---- OPTIMIZATIONS ----
 /// 1. CollisionHandler checks for collisions between every pair of colliders. Implement a data structure that will allow it to check only for collisions
@@ -10,7 +23,11 @@
 /// locations and swapping them around when attachTo() and detach() are called. (may also want to make attachTo() take a reference as the argument)
 
 /// ---- SUGGESTIONS (low priority) ----
-/// 1. It may be a good idea to have CollisionHandler rely on a less accurate but more robust method of retrieving a collision point and time when
+/// 1. It may be better to have ObjectAttachment.attachTo() be a virtual function that will both fulfill its current role and be responsible for
+/// getting all the other necessary attachments from the Object (and the transform, basically all dependencies). This will mess up the BehaviourStart
+/// initialization event described above, so just have Behaviour override attachTo() as a non-virtual function that does its current job and keep the
+/// rest of the dependency gathering in start().
+/// 2. It may be a good idea to have CollisionHandler rely on a less accurate but more robust method of retrieving a collision point and time when
 /// rolling back the simulation fails for whatever reason (floating point inaccuracy?) and an exception is normally thrown.
 
 
@@ -20,9 +37,6 @@
 #include <chrono>
 #include <thread>
 
-#include "include/Transform.h"
-#include "include/Rigidbody.h"
-
 #include "include/Vector.h"
 #include "include/Transform.h"
 #include "include/Rigidbody.h"
@@ -31,9 +45,10 @@
 #include "include/CollisionHandler.h"
 #include "include/Object.h"
 #include "include/ObjectHandler.h"
-#include "include/RigidbodyBuilder.h"
 #include "include/ObjectFactory.h"
+#include "include/ObjectDataFactory.h"
 #include "include/Shape.h"
+#include "include/Shooter.h"
 
 #include "include/appexceptions.h"
 
@@ -57,29 +72,19 @@ int main() {
     window.setView(view);
 
 
-    /*sf::CircleShape center(0.2);
-    center.setFillColor(sf::Color(0, 255, 0));
-    center.setPosition(0.0, 0.0);
-    center.setOrigin(0.2, 0.2);
+    ObjectData circle1 = ObjectDataFactory::getSolidCircleData(0.5);
 
-    sf::CircleShape circle(1.0);
-    circle.setFillColor(sf::Color(255, 0, 0));
-    circle.setPosition(0.0, 0.0);
-    circle.setOrigin(1, 1);*/
+    ObjectData circle2;
+    circle2.setCollider(CircleCollider(0.25));
+    circle2.setShape(Shape(0.25).setFillColor(sf::Color::Magenta));
+    circle2.setRigidbody(Rigidbody(0.5));
 
-    Object* circle = ObjectFactory::getSolidCircle(0.5);
-    circle->getTransform().setPosition(Vector(-3, 0));
+    Object* shooter1=ObjectFactory::createShooter(circle1, 4, 1);
+    Object* shooter2=ObjectFactory::createShooter(circle2, 8, 1);
 
-    Object* circle2 = new Object();
-    RigidbodyBuilder b; b.reset();
-    circle2->attachRigidbody(*RigidbodyBuilder().setMass(0.5).setBounciness(1).setFrictionCoefficient(0)
-            .setAirDragCoefficient(0).setConstraints(Rigidbody::Constraints::Free).build());
-    circle2->attachCollider(*(new CircleCollider(0.25)));
-    Shape* circleShape=new Shape(0.25);
-    circleShape->setFillColor(sf::Color::Magenta);
-    circle2->attachShape(*circleShape);
-    circle2->getTransform().setPosition({3, 0});
-    circle2->getRigidbody().addForce({-2, 0}, Rigidbody::ForceMode::Impulse);
+    shooter1->getTransform()=Transform(Vector(-3, 0.25), Transform::degToRad(-90));
+    shooter2->getTransform()=Transform(Vector(3, -0.25), Transform::degToRad(90));
+
 
     sf::Clock clock;
     while(window.isOpen()) {
@@ -102,10 +107,8 @@ int main() {
                 break;
             }
         }
-        //using namespace std::chrono_literals;
-        //std::this_thread::sleep_for(300ms);
 
-        circle->getRigidbody().addForce(Vector(2, 0));
+        ObjectHandler::getHandler().update(deltaTime.asSeconds());
 
         PhysicsHandler::getHandler().step(deltaTime.asSeconds());
 

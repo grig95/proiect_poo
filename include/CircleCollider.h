@@ -5,11 +5,11 @@
 
 class CircleCollider : public Collider {
 private:
-    double radius;
+    double radius=1;
 public:
     CircleCollider();
     CircleCollider(CircleCollider const& col);
-    explicit CircleCollider(double radius=1);
+    explicit CircleCollider(double radius);
     ~CircleCollider();
     CircleCollider& operator=(CircleCollider const& cc);
 

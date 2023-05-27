@@ -12,6 +12,7 @@
 class Rigidbody;
 class Collider;
 class Shape;
+class ObjectData;
 
 class Object {
 private:
@@ -25,6 +26,7 @@ private:
     void update(double deltaTime);
 public:
     Object();
+    Object(ObjectData const& obd);
     Object(Object const& obj); ///creates a new, identical object (with new, identical attachments)
     ~Object();
     Object& operator=(Object const&)=delete;
@@ -86,6 +88,7 @@ public:
     }
 
     friend class ObjectHandler;
+    friend class ObjectData;
 };
 
 

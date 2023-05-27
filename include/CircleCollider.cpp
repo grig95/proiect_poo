@@ -1,7 +1,7 @@
 #include "CircleCollider.h"
 
 ///constructos, copy assignment and destructor
-CircleCollider::CircleCollider() : Collider(Type::CircleCollider), radius(1) {}
+CircleCollider::CircleCollider() : Collider(Type::CircleCollider) {}
 
 CircleCollider::CircleCollider(CircleCollider const& col) : Collider(col), radius(col.radius) {}
 

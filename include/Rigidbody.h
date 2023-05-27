@@ -30,7 +30,7 @@ private:
     double angularVelocity = 0; ///measured in RADIANS/s
     Constraints constraints = Constraints::Free;
     double bounciness = 1; ///fraction of energy turned to movement energy after impact
-    double frictionCoefficient = 0; ///fraction of energy lost during impact
+    double frictionCoefficient = 0; ///will be combined with the other rb's coefficient to create a collision coefficient
     double airDragCoefficient = 0; ///also takes into account the DENSITY of the fluid and the CROSS SECTIONAL AREA
     bool active = true;
 
@@ -50,6 +50,9 @@ public:
     Rigidbody& operator=(Rigidbody const& rb);
 
     void addForce(Vector const& force, ForceMode forceMode=ForceMode::Force);
+    void addForceAtRelativePoint(Vector const& force, Vector const& relativePoint, ForceMode forceMode=ForceMode::Force);
+    static double bouncinessCombinationFunction(double b1, double b2);
+    static double frictionCoefficientCombinationFunction(double f1, double f2);
 
     bool const& getActivation() const;
     void setActivation(bool a);
@@ -62,6 +65,7 @@ public:
     double getAngularVelocity() const;
     Vector const& getResultantForce() const;
 
+    double getMass() const;
     Constraints const& getConstraints() const;
     double getBounciness() const;
     double getFrictionCoefficient() const;

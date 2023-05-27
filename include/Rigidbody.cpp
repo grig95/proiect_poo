@@ -91,6 +91,21 @@ void Rigidbody::addForce(Vector const& force, ForceMode forceMode) {
     }
 }
 
+void Rigidbody::addForceAtRelativePoint(Vector const& force, Vector const& relativePoint, ForceMode forceMode) {
+    Vector normal=relativePoint.normalized(); ///will hopefully trick the compiler into not throwing an 'unused parameter' error
+
+    ///temporary implementation
+    addForce(force, forceMode);
+}
+
+double Rigidbody::bouncinessCombinationFunction(double b1, double b2) {
+    return b1*b2;
+}
+
+double Rigidbody::frictionCoefficientCombinationFunction(double f1, double f2) {
+    return f1*f2;
+}
+
 ///utility
 
 ///getters, setters
@@ -126,6 +141,7 @@ Vector const& Rigidbody::getVelocity() const { return velocity; }
 double Rigidbody::getAngularVelocity() const { return angularVelocity; }
 Vector const& Rigidbody::getResultantForce() const { return resultantForce; }
 
+double Rigidbody::getMass() const { return mass; }
 Rigidbody::Constraints const& Rigidbody::getConstraints() const { return constraints; }
 double Rigidbody::getBounciness() const { return bounciness; }
 double Rigidbody::getFrictionCoefficient() const { return frictionCoefficient; }

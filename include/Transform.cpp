@@ -29,6 +29,10 @@ void Transform::move(double move_x, double move_y) {
     position+=move_x*Vector::right()+move_y*Vector::up();
 }
 
+void Transform::setRotation(double rotation_rad) { rotation=rotation_rad; }
+
+void Transform::setRotationDeg(double rotation_deg) { rotation = degToRad(rotation_deg); }
+
 void Transform::rotate(double angle_rad) {
     rotation = clampAngleRad(rotation+angle_rad);
 }

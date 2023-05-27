@@ -4,6 +4,7 @@
 #include "appexceptions.h"
 #include "ObjectHandler.h"
 #include "Shape.h"
+#include "ObjectData.h"
 
 ///basics
 Object::Object() : transform(), behaviours() {
@@ -56,6 +57,37 @@ Object::Object(Object const& obj) : transform(obj.transform), behaviours() {
     ObjectHandler::getHandler().track(this);
 }
 
+Object::Object(ObjectData const& obd) : transform(obd.transform) {
+    if(obd.rigidbody != nullptr)
+    {
+        rigidbody=new Rigidbody(*obd.rigidbody);
+        rigidbody->attachTo(this);
+        rigidbody->setTransform(&transform);
+    }
+    if(obd.collider != nullptr)
+    {
+        collider=obd.collider->createCopy();
+        collider->attachTo(this);
+        collider->setTransform(&transform);
+        if(rigidbody!=nullptr)
+            collider->setRigidbody(rigidbody);
+    }
+    if(obd.shape != nullptr)
+    {
+        shape=new Shape(*obd.shape);
+        shape->attachTo(this);
+        shape->setTransform(&transform);
+    }
+    for(unsigned int i=0; i < obd.behaviours.size(); i++)
+    {
+        behaviours.push_back(obd.behaviours[i]->createCopy());
+        behaviours[i]->attachTo(this);
+        behaviours[i]->start();
+    }
+
+    ObjectHandler::getHandler().track(this);
+}
+
 ///functionality
 void Object::render(sf::RenderWindow& window) const {
     if(shape==nullptr)
@@ -74,6 +106,13 @@ void Object::attachRigidbody(Rigidbody &rb) {
     if(rb.isAttached())
         throw unique_bind_error("Object", "Rigidbody");
 
+    if(rigidbody!=nullptr)
+    {
+        ///notify all behaviours
+        for(unsigned int i=0;i<behaviours.size();i++)
+            behaviours[i]->onRigidbodyChange(rb);
+    }
+
     rb.attachTo(this);
     rb.setTransform(&transform);
     rigidbody=&rb;
@@ -86,6 +125,13 @@ void Object::attachCollider(Collider &col) {
    if(col.isAttached())
        throw unique_bind_error("Object", "Collider");
 
+    if(collider!=nullptr)
+    {
+        ///notify all behaviours
+        for(unsigned int i=0;i<behaviours.size();i++)
+            behaviours[i]->onColliderChange(col);
+    }
+
    col.attachTo(this);
    col.setTransform(&transform);
    if(rigidbody!=nullptr)
@@ -94,8 +140,12 @@ void Object::attachCollider(Collider &col) {
 }
 
 void Object::attachShape(Shape& sh) {
-    shape=&sh;
+    if(sh.isAttached())
+        throw unique_bind_error("Object", "Shape");
+
+    shape->attachTo(this);
     shape->setTransform(&transform);
+    shape=&sh;
 }
 
 void Object::attachBehaviour(Behaviour &behaviour) {

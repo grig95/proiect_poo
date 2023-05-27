@@ -4,7 +4,6 @@
 #include <set>
 
 class Rigidbody;
-class Collision;
 
 class PhysicsHandler {
 private:
@@ -13,8 +12,6 @@ private:
     PhysicsHandler();
     void track(Rigidbody* rb);
     void untrack(Rigidbody* rb);
-
-    static void resolveCollision(Collision const& collision);
 public:
     ~PhysicsHandler();
     static PhysicsHandler& getHandler();
@@ -25,7 +22,6 @@ public:
     PhysicsHandler& operator=(PhysicsHandler const&) = delete;
 
     friend class Rigidbody;
-    friend class CollisionHandler; ///meant to only access resolveCollision()
 };
 
 

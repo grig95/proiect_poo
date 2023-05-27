@@ -10,8 +10,8 @@ class Collision {
 private:
     double timeElapsed;
     Vector contactPoint;
-    Collider& col1;
-    Collider& col2;
+    Collider& collider1;
+    Collider& collider2;
     Transform transform1, transform2; ///transforms at first contact time
     Vector normal1, normal2;
 public:
@@ -24,8 +24,8 @@ public:
 
     double getTimeElapsed() const;
     Vector const& getContactPoint() const;
-    Collider& getCol1() const;
-    Collider& getCol2() const;
+    Collider& getCollider1() const;
+    Collider& getCollider2() const;
     Transform const& getTransform1() const;
     Transform const& getTransform2() const;
     Vector const& getNormal1() const;

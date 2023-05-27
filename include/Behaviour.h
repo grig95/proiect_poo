@@ -3,6 +3,10 @@
 
 #include "ObjectAttachment.h"
 
+class Rigidbody;
+class Collider;
+class Shape;
+
 class Behaviour : public ObjectAttachment {
 protected:
     virtual void start() = 0;
@@ -11,7 +15,11 @@ protected:
     virtual void onRigidbodyDestroy() = 0;
     virtual void onColliderDestroy() = 0;
     virtual void onShapeDestroy() = 0;
-    virtual void onBehaviourDestroy(Behaviour* behaviour) = 0;
+    virtual void onBehaviourDestroy(Behaviour*) = 0;
+
+    virtual void onRigidbodyChange(Rigidbody& newRb) = 0;
+    virtual void onColliderChange(Collider& newCollider) = 0;
+    virtual void onShapeChange(Shape& newShape) = 0;
 public:
     Behaviour();
     Behaviour(Behaviour const&) = delete;
