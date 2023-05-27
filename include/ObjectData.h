@@ -57,7 +57,6 @@ public:
     void deleteCollider();
     void deleteShape();
     template<typename T> void deleteBehaviour() {
-        Behaviour* destroyed=nullptr;
         for(auto it=behaviours.begin();it!=behaviours.end();it++)
         {
             T* b=dynamic_cast<T*>(*it);
