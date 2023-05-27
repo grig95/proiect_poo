@@ -49,6 +49,7 @@
 #include "include/ObjectDataFactory.h"
 #include "include/Shape.h"
 #include "include/Shooter.h"
+#include "include/Rotator.h"
 
 #include "include/appexceptions.h"
 
@@ -83,11 +84,14 @@ int main() {
     circle2.setShape(Shape(0.25).setFillColor(sf::Color::Magenta));
     circle2.setRigidbody(Rigidbody(0.5));
 
-    Object* shooter1=ObjectFactory::createShooter(circle1, 4, 1);
-    Object* shooter2=ObjectFactory::createShooter(circle2, 8, 1);
+    Object* shooter1=ObjectFactory::createShooter(circle1, 5, 0.25);
+    Object* shooter2=ObjectFactory::createShooter(circle2, 8, 0.15);
 
     shooter1->getTransform()=Transform(Vector(-3, 0.25), Transform::degToRad(-90));
     shooter2->getTransform()=Transform(Vector(3, -0.25), Transform::degToRad(90));
+
+    shooter1->attachBehaviour(*(new Rotator(Transform::degToRad(90))));
+    shooter2->attachBehaviour(*(new Rotator(Transform::degToRad(-90))));
 
 
     sf::Clock clock;
