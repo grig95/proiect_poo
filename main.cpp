@@ -170,4 +170,13 @@ void callMyUnusedFunctions() {
     object->destroyBehaviour<Shooter>();
 
     delete object;
+
+    ObjectData objectData=ObjectDataFactory::getSolidCircleData();
+    objectData.deleteRigidbody();
+    objectData.deleteCollider();
+    objectData.deleteShape();
+    ///pretty sure deleteBehaviour<>() is uncalled too but whatever, guess it's because it's a template and not an actual function yet
+
+    Object* circle=ObjectFactory::createSolidCircle();
+    delete circle;
 }
