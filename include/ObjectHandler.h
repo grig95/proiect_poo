@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 class Object;
+class Vector; ///just for the average thing
 
 class ObjectHandler {
 private:
@@ -25,6 +26,8 @@ public:
     ObjectHandler(ObjectHandler const&) = delete;
     ObjectHandler& operator=(ObjectHandler const&) = delete;
 
+
+    Vector getAveragePosition();
 
     friend class Object;
 };

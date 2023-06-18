@@ -1,6 +1,8 @@
 #include "ObjectHandler.h"
 #include "Object.h"
 
+#include "Averager.h"
+
 ///basics
 ObjectHandler::ObjectHandler() = default;
 ObjectHandler::~ObjectHandler() = default;
@@ -34,4 +36,15 @@ void ObjectHandler::render(sf::RenderWindow& window) const {
 void ObjectHandler::update(double deltaTime) const {
     for(auto it=objects.begin();it!=objects.end();it++)
         (*it)->update(deltaTime);
+}
+
+
+///average thing
+Vector ObjectHandler::getAveragePosition() {
+    Averager<Vector> avg;
+
+    for(auto it=objects.begin();it!=objects.end();it++)
+        avg.add((*it)->getTransform().getPosition());
+
+    return avg.getAverage();
 }

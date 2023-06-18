@@ -21,6 +21,8 @@ public:
     PhysicsHandler(PhysicsHandler const&) = delete;
     PhysicsHandler& operator=(PhysicsHandler const&) = delete;
 
+    double getAverageEnergy();
+
     friend class Rigidbody;
 };
 

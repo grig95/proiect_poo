@@ -8,9 +8,10 @@
 /// each other.
 /// 2. Have Object keep track of its last Transform and use that to determine speed and rotational speed when it collides with rigidbody objects.
 /// 3. Implement collision events.
+/// 4. Check uses of 'protected' for actual usefulness.
 
 /// ---- REMEMBER ----
-/// 1. Specialize Rigidbody's addForceToRelativePoint() function.
+/// 1. Specialize Rigidbody's addForceToRelativePoint() function (when implementing rotation).
 /// 2. Check the physics behind the momentum distribution in a collision.
 /// 3. In Object, the Behaviour.start() method is called for initialization everytime a new Behaviour is attached. This can create problems if behaviours
 /// that depend on each other are not attached in the proper order or in cases of circular dependencies. One possible fix is implementing a BehaviourStart
@@ -50,6 +51,8 @@
 #include "include/Shape.h"
 #include "include/Shooter.h"
 #include "include/Rotator.h"
+
+#include "include/Averager.h"
 
 #include "include/appexceptions.h"
 
@@ -127,6 +130,8 @@ int main() {
         ObjectHandler::getHandler().render(window);
 
         window.display();
+
+        std::cout<<"Average position: "<<ObjectHandler::getHandler().getAveragePosition()<<"\nAverage energy: "<<PhysicsHandler::getHandler().getAverageEnergy()<<"\n\n";
     }
 
 
