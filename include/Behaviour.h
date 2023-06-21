@@ -17,9 +17,9 @@ protected:
     virtual void onShapeDestroy();
     virtual void onBehaviourDestroy(Behaviour*);
 
-    virtual void onRigidbodyChange(Rigidbody* newRb);
-    virtual void onColliderChange(Collider* newCollider);
-    virtual void onShapeChange(Shape* newShape);
+    virtual void onRigidbodyChange(Rigidbody*);
+    virtual void onColliderChange(Collider*);
+    virtual void onShapeChange(Shape*);
 public:
     Behaviour();
     Behaviour(Behaviour const&) = delete;

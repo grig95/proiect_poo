@@ -9,6 +9,6 @@ void Behaviour::onColliderDestroy() {}
 void Behaviour::onShapeDestroy() {}
 void Behaviour::onBehaviourDestroy(Behaviour*) {}
 
-void Behaviour::onRigidbodyChange(Rigidbody* newRb) {}
-void Behaviour::onColliderChange(Collider* newCollider) {}
-void Behaviour::onShapeChange(Shape* newShape) {}
+void Behaviour::onRigidbodyChange(Rigidbody*) {}
+void Behaviour::onColliderChange(Collider*) {}
+void Behaviour::onShapeChange(Shape*) {}
