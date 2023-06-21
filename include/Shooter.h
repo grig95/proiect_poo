@@ -15,15 +15,6 @@ protected:
 
     void start() override;
     void update(double deltaTime) override;
-
-    void onRigidbodyDestroy() override;
-    void onColliderDestroy() override;
-    void onShapeDestroy() override;
-    void onBehaviourDestroy(Behaviour*) override;
-
-    void onRigidbodyChange(Rigidbody&) override;
-    void onColliderChange(Collider&) override;
-    void onShapeChange(Shape&) override;
 public:
     Shooter(ObjectData const& prefab, double speed, double cooldown);
     Shooter(Shooter const& shooter);

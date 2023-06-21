@@ -28,16 +28,3 @@ void Rotator::update(double deltaTime) {
 
 ///createCopy()
 Behaviour* Rotator::createCopy() { return new Rotator(*this); }
-
-
-///onDestroy()s
-void Rotator::onRigidbodyDestroy() {}
-void Rotator::onColliderDestroy() {}
-void Rotator::onShapeDestroy() {}
-void Rotator::onBehaviourDestroy(Behaviour*) {}
-
-
-///onChange()s
-void Rotator::onRigidbodyChange(Rigidbody&) {}
-void Rotator::onColliderChange(Collider&) {}
-void Rotator::onShapeChange(Shape&) {}

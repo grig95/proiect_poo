@@ -93,8 +93,8 @@ int main() {
     shooter1->getTransform()=Transform(Vector(-3, 0.25), Transform::degToRad(-90));
     shooter2->getTransform()=Transform(Vector(3, -0.25), Transform::degToRad(90));
 
-    shooter1->attachBehaviour(*(new Rotator(Transform::degToRad(90))));
-    shooter2->attachBehaviour(*(new Rotator(Transform::degToRad(-90))));
+    shooter1->attachBehaviour(new Rotator(Transform::degToRad(90)));
+    shooter2->attachBehaviour(new Rotator(Transform::degToRad(-90)));
 
 
     sf::Clock clock;
@@ -131,7 +131,7 @@ int main() {
 
         window.display();
 
-        std::cout<<"Average position: "<<ObjectHandler::getHandler().getAveragePosition()<<"\nAverage energy: "<<PhysicsHandler::getHandler().getAverageEnergy()<<"\n\n";
+        std::cout<<"Average object position: "<<ObjectHandler::getHandler().getAveragePosition()<<"\nAverage rigidbody energy: "<<PhysicsHandler::getHandler().getAverageEnergy()<<"\n\n";
     }
 
 
@@ -163,10 +163,14 @@ void callMyUnusedFunctions() {
 
     Shooter* shooter=new Shooter(ObjectDataFactory::getSolidCircleData(), 1, 1);
 
-    object->attachRigidbody(*rb);
-    object->attachCollider(*collider);
-    object->attachShape(*shape);
-    object->attachBehaviour(*shooter);
+    object->attachRigidbody(rb);
+    object->attachCollider(collider);
+    object->attachShape(shape);
+    object->attachBehaviour(shooter);
+
+    Object* obj2=new Object;
+    *obj2=*object;
+    delete obj2;
 
     if(object->hasCollider())
         object->getCollider();

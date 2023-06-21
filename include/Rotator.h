@@ -12,15 +12,6 @@ protected:
 
     void start() override;
     void update(double deltaTime) override;
-
-    void onRigidbodyDestroy() override;
-    void onColliderDestroy() override;
-    void onShapeDestroy() override;
-    void onBehaviourDestroy(Behaviour*) override;
-
-    void onRigidbodyChange(Rigidbody&) override;
-    void onColliderChange(Collider&) override;
-    void onShapeChange(Shape&) override;
 public:
     explicit Rotator(double rotationSpeed);
     Rotator(Rotator const& rotator);

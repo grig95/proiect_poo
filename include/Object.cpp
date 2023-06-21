@@ -57,6 +57,38 @@ Object::Object(Object const& obj) : transform(obj.transform), behaviours() {
     ObjectHandler::getHandler().track(this);
 }
 
+Object& Object::operator=(Object const& obj) {
+    transform=obj.transform;
+    if(obj.rigidbody!=nullptr)
+    {
+        rigidbody=new Rigidbody(*obj.rigidbody);
+        rigidbody->attachTo(this);
+        rigidbody->setTransform(&transform);
+    }
+    if(obj.collider!=nullptr)
+    {
+        collider=obj.collider->createCopy();
+        collider->attachTo(this);
+        collider->setTransform(&transform);
+        if(rigidbody!=nullptr)
+            collider->setRigidbody(rigidbody);
+    }
+
+    if(obj.shape!=nullptr)
+    {
+        shape=new Shape(*obj.shape);
+        shape->attachTo(this);
+        shape->setTransform(&transform);
+    }
+
+    for(unsigned int i=0;i<obj.behaviours.size();i++)
+    {
+        behaviours.push_back(obj.behaviours[i]->createCopy());
+        behaviours[i]->attachTo(this);
+        behaviours[i]->start();
+    }
+}
+
 Object::Object(ObjectData const& obd) : transform(obd.transform) {
     if(obd.rigidbody != nullptr)
     {
@@ -102,59 +134,78 @@ void Object::update(double deltaTime) {
 
 
 ///attachers
-void Object::attachRigidbody(Rigidbody &rb) {
-    if(rb.isAttached())
-        throw unique_bind_error("Object", "Rigidbody");
-
-    if(rigidbody!=nullptr)
+void Object::attachRigidbody(Rigidbody* rb) {
+    if(rb==nullptr)
     {
-        ///notify all behaviours
-        for(unsigned int i=0;i<behaviours.size();i++)
-            behaviours[i]->onRigidbodyChange(rb);
+        destroyRigidbody();
+        return;
     }
 
-    rb.attachTo(this);
-    rb.setTransform(&transform);
-    rigidbody=&rb;
+    if(rb->isAttached())
+        throw unique_bind_error("Object", "Rigidbody");
+
+    ///notify all behaviours
+    for(unsigned int i=0;i<behaviours.size();i++)
+        behaviours[i]->onRigidbodyChange(rb);
+
+    rb->attachTo(this);
+    rb->setTransform(&transform);
+    rigidbody=rb;
 
     if(collider!=nullptr)
         collider->setRigidbody(rigidbody);
 }
 
-void Object::attachCollider(Collider &col) {
-   if(col.isAttached())
+void Object::attachCollider(Collider* col) {
+   if(col==nullptr)
+   {
+       destroyCollider();
+       return;
+   }
+
+   if(col->isAttached())
        throw unique_bind_error("Object", "Collider");
 
-    if(collider!=nullptr)
+   ///notify all behaviours
+   for(unsigned int i=0;i<behaviours.size();i++)
+       behaviours[i]->onColliderChange(col);
+
+   col->attachTo(this);
+   col->setTransform(&transform);
+   if(rigidbody!=nullptr)
+       col->setRigidbody(rigidbody);
+   collider=col;
+}
+
+void Object::attachShape(Shape* sh) {
+    if(sh==nullptr)
     {
-        ///notify all behaviours
-        for(unsigned int i=0;i<behaviours.size();i++)
-            behaviours[i]->onColliderChange(col);
+        destroyShape();
+        return;
     }
 
-   col.attachTo(this);
-   col.setTransform(&transform);
-   if(rigidbody!=nullptr)
-       col.setRigidbody(rigidbody);
-   collider=&col;
-}
-
-void Object::attachShape(Shape& sh) {
-    if(sh.isAttached())
+    if(sh->isAttached())
         throw unique_bind_error("Object", "Shape");
 
-    sh.attachTo(this);
-    sh.setTransform(&transform);
-    shape=&sh;
+    ///notify all behaviours
+    for(unsigned int i=0;i<behaviours.size();i++)
+        behaviours[i]->onShapeChange(sh);
+
+    sh->attachTo(this);
+    sh->setTransform(&transform);
+    shape=sh;
 }
 
-void Object::attachBehaviour(Behaviour &behaviour) {
-    if(behaviour.isAttached())
+void Object::attachBehaviour(Behaviour* behaviour) {
+    if(behaviour==nullptr)
+        return;
+
+    if(behaviour->isAttached())
         throw unique_bind_error("Object", "Behaviour");
 
-    behaviour.attachTo(this);
-    behaviours.push_back(&behaviour);
-    behaviour.start();
+    behaviour->attachTo(this);
+    behaviours.push_back(behaviour);
+    behaviour->start();
 }
 
 ///checkers

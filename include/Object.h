@@ -28,13 +28,13 @@ public:
     Object();
     explicit Object(ObjectData const& obd);
     Object(Object const& obj); ///creates a new, identical object (with new, identical attachments)
+    Object& operator=(Object const&); ///copies everything, including transform
     ~Object();
-    Object& operator=(Object const&)=delete;
 
-    void attachRigidbody(Rigidbody& rb);
-    void attachCollider(Collider& col);
-    void attachShape(Shape& sh);
-    void attachBehaviour(Behaviour& behaviour);
+    void attachRigidbody(Rigidbody* rb);
+    void attachCollider(Collider* col);
+    void attachShape(Shape* sh);
+    void attachBehaviour(Behaviour* behaviour);
 
     bool hasRigidbody();
     bool hasCollider();

@@ -40,14 +40,3 @@ void Shooter::update(double deltaTime) {
         timeSinceLastShot=0;
     }
 }
-
-///onDestroy()s
-void Shooter::onRigidbodyDestroy() {}
-void Shooter::onColliderDestroy() {}
-void Shooter::onShapeDestroy() {}
-void Shooter::onBehaviourDestroy(Behaviour *) {}
-
-///onChange()s
-void Shooter::onRigidbodyChange(Rigidbody&) {}
-void Shooter::onColliderChange(Collider&) {}
-void Shooter::onShapeChange(Shape&) {}

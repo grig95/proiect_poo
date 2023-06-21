@@ -12,14 +12,14 @@ protected:
     virtual void start() = 0;
     virtual void update(double deltaTime) = 0;
 
-    virtual void onRigidbodyDestroy() = 0;
-    virtual void onColliderDestroy() = 0;
-    virtual void onShapeDestroy() = 0;
-    virtual void onBehaviourDestroy(Behaviour*) = 0;
+    virtual void onRigidbodyDestroy();
+    virtual void onColliderDestroy();
+    virtual void onShapeDestroy();
+    virtual void onBehaviourDestroy(Behaviour*);
 
-    virtual void onRigidbodyChange(Rigidbody& newRb) = 0;
-    virtual void onColliderChange(Collider& newCollider) = 0;
-    virtual void onShapeChange(Shape& newShape) = 0;
+    virtual void onRigidbodyChange(Rigidbody* newRb);
+    virtual void onColliderChange(Collider* newCollider);
+    virtual void onShapeChange(Shape* newShape);
 public:
     Behaviour();
     Behaviour(Behaviour const&) = delete;
