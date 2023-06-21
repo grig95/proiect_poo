@@ -58,6 +58,9 @@ Object::Object(Object const& obj) : transform(obj.transform), behaviours() {
 }
 
 Object& Object::operator=(Object const& obj) {
+    if(this==&obj)
+        return *this;
+
     transform=obj.transform;
     if(obj.rigidbody!=nullptr)
     {
