@@ -90,6 +90,8 @@ Object& Object::operator=(Object const& obj) {
         behaviours[i]->attachTo(this);
         behaviours[i]->start();
     }
+
+    return *this;
 }
 
 Object::Object(ObjectData const& obd) : transform(obd.transform) {
